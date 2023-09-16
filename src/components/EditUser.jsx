@@ -9,8 +9,9 @@ import {
 } from "@mui/material";
 
 import { addUser } from "../service/api";
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { getUser } from "../service/api";
 
 const Container = styled(FormGroup)`
   width: 50%;
@@ -27,7 +28,7 @@ const initialValue = {
   phone: "",
 };
 
-export default function AddUser() {
+export default function EditUser() {
   const navigate = useNavigate();
   const [user, setUser] = useState(initialValue);
 
@@ -39,10 +40,18 @@ export default function AddUser() {
     await addUser(user);
     navigate("/AllUser");
   };
+  const { id } = useParams();
+  useEffect(() => {
+    loadUserDetails();
+  }, []);
+  const loadUserDetails = async () => {
+    const res = await getUser(id);
+    console.log(res);
+  };
 
   return (
     <Container>
-      <Typography varient="h1">Add User</Typography>
+      <Typography varient="h1">Edit User</Typography>
       <FormControl>
         <InputLabel>Name</InputLabel>
         <Input onChange={(e) => onValueChange(e)} name="name" />
@@ -65,7 +74,7 @@ export default function AddUser() {
           color="primary"
           onClick={() => AddUserDetails()}
         >
-          Add User
+          Edit User
         </Button>
       </FormControl>
     </Container>
