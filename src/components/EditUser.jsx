@@ -8,7 +8,7 @@ import {
   Button,
 } from "@mui/material";
 
-import { addUser } from "../service/api";
+import { editUser } from "../service/api";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getUser } from "../service/api";
@@ -36,17 +36,20 @@ export default function EditUser() {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  const AddUserDetails = async () => {
-    await addUser(user);
+  const EditUserDetails = async () => {
+    await editUser(user, id);
     navigate("/AllUser");
   };
   const { id } = useParams();
+
   useEffect(() => {
     loadUserDetails();
   }, []);
+
   const loadUserDetails = async () => {
     const res = await getUser(id);
-    console.log(res);
+    console.log(res.data[0].name);
+    setUser(res.data[0]);
   };
 
   return (
@@ -54,25 +57,41 @@ export default function EditUser() {
       <Typography varient="h1">Edit User</Typography>
       <FormControl>
         <InputLabel>Name</InputLabel>
-        <Input onChange={(e) => onValueChange(e)} name="name" />
+        <Input
+          onChange={(e) => onValueChange(e)}
+          name="name"
+          value={user.name}
+        />
       </FormControl>
       <FormControl>
         <InputLabel>User name</InputLabel>
-        <Input onChange={(e) => onValueChange(e)} name="username" />
+        <Input
+          onChange={(e) => onValueChange(e)}
+          name="username"
+          value={user.username}
+        />
       </FormControl>
       <FormControl>
         <InputLabel>Email</InputLabel>
-        <Input onChange={(e) => onValueChange(e)} name="email" />
+        <Input
+          onChange={(e) => onValueChange(e)}
+          name="email"
+          value={user.email}
+        />
       </FormControl>
       <FormControl>
         <InputLabel>Phone</InputLabel>
-        <Input onChange={(e) => onValueChange(e)} name="phone" />
+        <Input
+          onChange={(e) => onValueChange(e)}
+          name="phone"
+          value={user.phone}
+        />
       </FormControl>
       <FormControl>
         <Button
           variant="contained"
           color="primary"
-          onClick={() => AddUserDetails()}
+          onClick={() => EditUserDetails()}
         >
           Edit User
         </Button>

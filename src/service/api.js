@@ -34,3 +34,20 @@ export const getUser = async (id) => {
     console.log("error while fetching user");
   }
 };
+
+export const editUser = async (user, id) => {
+  try {
+    return await axios.put(`${URL}/${id}`, user);
+  } catch (error) {
+    console.log("error in editing", error);
+  }
+};
+
+export const deleteUser = async (id) => {
+  try {
+    return await axios.delete(`${URL}/${id}`);
+    // return await axios.delete(`${URL}/${id}`);
+  } catch (error) {
+    console.log("error white deleting user", error);
+  }
+};

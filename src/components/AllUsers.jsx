@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 
-import { getAllUsers } from "../service/api";
+import { getAllUsers, deleteUser } from "../service/api";
 import { Link, useNavigate } from "react-router-dom";
 
 const StyledTable = styled(Table)`
@@ -45,7 +45,12 @@ export default function AllUsers() {
   const getUsers = async () => {
     let res = await getAllUsers();
     setUsers(res.data);
-    console.log(users);
+    // console.log(users);
+  };
+
+  const deleteUserDetails = async (id) => {
+    await deleteUser(id);
+    getUsers();
   };
   return (
     <StyledTable>
@@ -61,7 +66,7 @@ export default function AllUsers() {
       </TableHead>
       <TableBody>
         {users.map((user) => (
-          <TRow key={user.id}>
+          <TRow key={user._id}>
             <TableCell>{user._id.slice(-4)}</TableCell>{" "}
             {/* change it to user.id to use JSON Server */}
             <TableCell>{user.name}</TableCell>
@@ -78,7 +83,13 @@ export default function AllUsers() {
               >
                 Edit
               </Button>
-              <Button variant="contained">Delete</Button>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => deleteUserDetails(user._id)}
+              >
+                Delete
+              </Button>
             </TableCell>
           </TRow>
         ))}
