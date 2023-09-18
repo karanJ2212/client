@@ -6,10 +6,29 @@ import AllUsers from "./components/AllUsers";
 import EditUser from "./components/EditUser";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Box, CssBaseline, ThemeProvider } from "@mui/material";
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
+import theme from "./config/theme";
+import Sidenav from "./components/Sidenav";
+import AppHeader from "./components/AppHeader";
+
 export default function App() {
   return (
     <div className="app">
-      <BrowserRouter>
+      <React.Fragment>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <AppHeader />
+          <Box sx={styles.container}>
+            <Sidenav />
+            <Box component={"main"} sx={styles.mainSection}></Box>
+          </Box>
+        </ThemeProvider>
+      </React.Fragment>
+      {/* <BrowserRouter>
         <Navbar />
         <Routes>
           <Route path="/" element={<ClaimZippy />} />
@@ -17,7 +36,23 @@ export default function App() {
           <Route path="/AllUser" element={<AllUsers />} />
           <Route path="/EditUser/:id" element={<EditUser />} />
         </Routes>
-      </BrowserRouter>
+      </BrowserRouter> */}
     </div>
   );
 }
+/**
+ * @type {import('@mui/material').SxProps}
+ */
+const styles = {
+  container: {
+    display: "flex",
+    bgcolor: "neutral.light",
+    height: "calc(100% - 64px)",
+  },
+  mainSection: {
+    p: 4,
+    width: "100%",
+    height: "100%",
+    overflow: "auto",
+  },
+};
