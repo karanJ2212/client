@@ -14,18 +14,29 @@ import "@fontsource/roboto/700.css";
 import theme from "./config/theme";
 import Sidenav from "./components/Sidenav";
 import AppHeader from "./components/AppHeader";
+import { ProSidebarProvider } from "react-pro-sidebar";
 
 export default function App() {
   return (
     <div className="app">
       <React.Fragment>
         <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <AppHeader />
-          <Box sx={styles.container}>
-            <Sidenav />
-            <Box component={"main"} sx={styles.mainSection}></Box>
-          </Box>
+          <ProSidebarProvider>
+            <CssBaseline />
+            <BrowserRouter>
+              <AppHeader />
+              <Box sx={styles.container}>
+                <Sidenav />
+                <Routes>
+                  {/* <Route path="/" element={<ClaimZippy />} /> */}
+                  <Route path="/AddUser" element={<AddUser />} />
+                  <Route path="/AllUser" element={<AllUsers />} />
+                  <Route path="/EditUser/:id" element={<EditUser />} />
+                </Routes>
+                <Box component={"main"} sx={styles.mainSection}></Box>
+              </Box>
+            </BrowserRouter>
+          </ProSidebarProvider>
         </ThemeProvider>
       </React.Fragment>
       {/* <BrowserRouter>
